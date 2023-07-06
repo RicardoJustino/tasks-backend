@@ -51,5 +51,13 @@ pipeline {
                 }
             }
         }
+        stage('functional Test'){
+            steps {
+                dir('functional-test') {
+                    git credentialsId: 'github_login', url: 'https://github.com/RicardoJustino/tasks-funcional-tests'
+                    bat 'mvn test'
+                }
+            }
+        }
     }
 }
