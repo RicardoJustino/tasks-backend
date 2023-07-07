@@ -34,36 +34,36 @@ pipeline {
                     deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks-backend', war: 'target/tasks-backend.war'
             }
         }
-        // stage('API Test'){
-        //     steps {
-        //         dir('api-test') {
-        //             git credentialsId: 'github_login', url: 'https://github.com/RicardoJustino/tasks-api-test'
-        //             bat 'mvn test'
-        //         }
-        //     }
-        // }
-        // stage('Deploy Frontend'){
-        //     steps {
-        //         dir('frontend') {
-        //             git credentialsId: 'github_login', url: 'https://github.com/RicardoJustino/tasks-frontend'
-        //             bat 'mvn clean package'
-        //             deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
-        //         }
-        //     }
-        // }
-        // stage('functional Test'){
-        //     steps {
-        //         dir('functional-test') {
-        //             git credentialsId: 'github_login', url: 'https://github.com/RicardoJustino/tasks-funcional-tests'
-        //             bat 'mvn test'
-        //         }
-        //     }
-        // }
-        // stage('Deploy Prod'){
-        //     steps {
-        //         bat 'docker-compose build'
-        //         bat 'docker-compose up -d'
-        //     }
-        // }
+        stage('API Test'){
+            steps {
+                dir('api-test') {
+                    git credentialsId: 'github_login', url: 'https://github.com/RicardoJustino/tasks-api-test'
+                    bat 'mvn test'
+                }
+            }
+        }
+        stage('Deploy Frontend'){
+            steps {
+                dir('frontend') {
+                    git credentialsId: 'github_login', url: 'https://github.com/RicardoJustino/tasks-frontend'
+                    bat 'mvn clean package'
+                    deploy adapters: [tomcat8(credentialsId: 'TomcatLogin', path: '', url: 'http://localhost:8001/')], contextPath: 'tasks', war: 'target/tasks.war'
+                }
+            }
+        }
+        stage('functional Test'){
+            steps {
+                dir('functional-test') {
+                    git credentialsId: 'github_login', url: 'https://github.com/RicardoJustino/tasks-funcional-tests'
+                    bat 'mvn test'
+                }
+            }
+        }
+        stage('Deploy Prod'){
+            steps {
+                bat 'docker-compose build'
+                bat 'docker-compose up -d'
+            }
+        }
     }
 }
